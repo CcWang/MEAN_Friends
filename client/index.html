@@ -1,0 +1,52 @@
+<html ng-app="friends_app">
+<head>
+  <title>Full Mean Demo</title>
+  <!-- require angular -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+ <script type="text/javascript" src="/static/script.js"></script>
+</head>
+<!-- everything in the body is going to use the friends controller (this gives us access to the friends controller $scope) -->
+<body ng-controller="FriendsController">
+  <div class="container">
+    <h1 class="text-center text-primary">Friends</h1>
+    <div class="form-group col-sm-4">
+      <input type="text" class='form-control'ng-model="filter_name" placeholder="filter">
+      {{filter_name}}
+    </div>
+    <div class="col-sm-12">
+      
+      <ul class="list-group col-sm-4">
+        <!-- here is where we are going to display friends -->
+        <li class="list-group-item text-success lead" ng-repeat="friend in friends | filter: filter_name">
+          {{friend.name}}, {{friend.age}}
+        </li>
+      </ul>
+      <div class="col-sm-12">
+        
+        <h1 class="text-center text-primary">Add a Friend</h1>
+        <!-- objects and properties nothing scary -->
+        <form class="form-inline" role='form'>
+          <div class="form-group">
+            <input type="text" ng-model="new_friend.name" placeholder="name" class="form-control">
+          </div>
+          <div class="form-group">
+            <input type="text" ng-model="new_friend.age" placeholder="age" class="form-control">
+          </div>
+          <button type="submit" class='btn btn-primary' ng-click="addfriend()">Add Friend</button>
+
+        </form>
+        <!-- addfriend() is a method we are going to make in the angular controller -->
+      </div>
+    
+    </div>
+  </div>
+</body>
+</html>

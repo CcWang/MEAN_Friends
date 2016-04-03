@@ -1,15 +1,17 @@
 var friends_app = angular.module('friends_app',[]);
 
-friends_app.factory('FriendFactory',function(){
+friends_app.factory('FriendFactory',function($http){
 	var factory ={};
 	var friends = [];
-	factory.index = function(){
-		return friends;
+	factory.index = function(cb){
+		$http.get('/friends').success(function(output){
+			friends = output;
+			cb(friends);
+		})
 	}
 
-	factory.create = function(info, cb){
-		friends.push({name:info.name,age:info.age});
-		cb(friends);
+	factory.create = function(info){
+		friends.push(info);
 	}
 
 	return factory;
@@ -17,11 +19,11 @@ friends_app.factory('FriendFactory',function(){
 
 friends_app.controller('FriendsController', function ($scope, FriendFactory) {
 	// body...
-	$scope.friends = FriendFactory.index();
+	FriendFactory.index(function(data){
+		$scope.friends=data;
+	});
 	$scope.addfriend = function(){
-		FriendFactory.create($scope.new_friend, function(){
-			$scope.friends = FriendFactory.index();
+		FriendFactory.create($scope.new_friend);
 			$scope.new_friend = {};
-		});
 	}
 })

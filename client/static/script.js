@@ -11,7 +11,9 @@ friends_app.factory('FriendFactory',function($http){
 	}
 
 	factory.create = function(info){
-		friends.push(info);
+		$http.post('/friend',info).success(function(output){
+			friends.push({name:output.name,age:output.age})
+		})
 	}
 
 	return factory;

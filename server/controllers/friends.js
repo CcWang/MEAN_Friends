@@ -1,7 +1,23 @@
+var mongoose = require('mongoose');
+var Friend = mongoose.model('Friend');
 module.exports = {
 	index:function (req,res) {
 		// body...
-		res.json([{name:'Andrew',age:24},
-			{name:'Michael',age:35}]);
+		Friend.find({}, function(err,results){
+			if (err) {
+				console.log('errors',err);
+			}else{
+				res.json(results);
+			}
+		});
+	},
+	add:function(req,res){
+		Friend.create(req.body,function(err,results){
+			if (err) {
+				console.log('errors',err);
+			}else{
+				res.json(results)
+			}
+		})
 	}
 }
